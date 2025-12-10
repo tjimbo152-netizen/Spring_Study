@@ -1,0 +1,40 @@
+package com.example.demo.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+// ★ 追加: バリデーション関連
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.ui.Model; // Modelが必要な場合も考慮し、追加します
+
+import com.example.demo.domain.model.UserForm;
+import com.example.demo.domain.model.UserForm.Groups; // GroupSequenceを使用するため
+
+@Controller
+public class RegisterController {
+
+    @GetMapping("/form")
+    private String readForm(@ModelAttribute UserForm userForm) {
+        return "form";
+    }
+
+    @PostMapping("/form")
+    // 【修正・追加箇所】
+    // 1. @Validated(UserForm.Groups.class) を追加してバリデーションを指示
+    // 2. BindingResult を追加してエラーを受け取る
+    private String confirm(@Validated(UserForm.Groups.class) @ModelAttribute UserForm userForm, 
+                           BindingResult result, 
+                           Model model) { // Modelは必須ではないが、あっても問題ない
+
+        // 【追加ロジック】 エラーチェック
+        if (result.hasErrors()) {
+            // エラーがある場合、form.html に戻る
+            return "form"; 
+        }
+        
+        // エラーがない場合、confirm.html に進む
+        return "confirm";
+    }
+}
