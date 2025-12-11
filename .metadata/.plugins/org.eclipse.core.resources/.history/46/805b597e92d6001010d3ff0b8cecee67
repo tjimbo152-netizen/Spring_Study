@@ -1,0 +1,56 @@
+package com.example.demo.domain.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult; // BindingResultをインポート
+
+import com.example.demo.domain.entity.Users;
+import com.example.demo.domain.model.UserForm;
+import com.example.demo.domain.repository.UsersRepository;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+@Service
+public class UsersRegisterService {
+
+    @Autowired
+    private UsersRepository usersRepository;
+
+    public void register(final UserForm userForm) {
+        Users entity = new Users();
+        entity.setName(userForm.getName());
+        entity.setEmail(userForm.getEmail());
+        entity.setAge(userForm.getAge());
+        entity.setNote(userForm.getNote());
+        usersRepository.save(entity);
+    }
+    
+    // 1-6課題
+    // 入力チェック用
+    // 戻り値: true=エラーあり, false=エラーなし
+    public boolean isValid(UserForm userForm, BindingResult result) {
+        
+    	String email = userForm.getEmail();
+    	
+    	if (email == null || email.isBlank()) {
+            return false; // 重複エラーなしとして処理を続行
+        }
+    	
+        // E-Mailの重複チェック
+        if (usersRepository.existsByEmail(userForm.getEmail())) {
+            
+            // 重複があれば、BindingResultにエラーを設定する
+            // emailフィールドにエラーメッセージを付与する
+            result.rejectValue(
+                "email", // エラーを付与するフィールド名
+                "error.userForm", // エラーコード 
+                "既に登録されているE-Mailです。" // 表示されるメッセージ
+            );
+            
+            return true; 
+        }
+        
+        return false; 
+    }
+}

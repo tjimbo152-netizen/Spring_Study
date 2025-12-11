@@ -25,18 +25,18 @@ public class UsersRegisterService {
         entity.setNote(userForm.getNote());
         usersRepository.save(entity);
     }
-    
+
     // 1-6課題
     // 入力チェック用
     // 戻り値: true=エラーあり, false=エラーなし
     public boolean isValid(UserForm userForm, BindingResult result) {
-        
+
     	String email = userForm.getEmail();
     	
     	if (email == null || email.isBlank()) {
             return false; // 重複エラーなしとして処理を続行
         }
-    	
+
         // E-Mailの重複チェック
         if (usersRepository.existsByEmail(userForm.getEmail())) {
             
@@ -47,10 +47,10 @@ public class UsersRegisterService {
                 "error.userForm", // エラーコード 
                 "既に登録されているE-Mailです。" // 表示されるメッセージ
             );
-            
+
             return true; 
         }
-        
+
         return false; 
     }
 }

@@ -14,7 +14,6 @@ import com.example.demo.domain.service.UsersRegisterService;
 
 @Controller
 public class RegisterController {
-
     @Autowired
     private UsersRegisterService usersRegisterService;
 	
@@ -31,30 +30,14 @@ public class RegisterController {
             return "form";
         }
 
-        return "confirm";
-    }
-    
-    // 【新規追加】登録実行メソッド
-    @PostMapping("/register")
-    public String register(@ModelAttribute UserForm userForm, BindingResult result) { // BindingResultを追加
-        
         // サービスのカスタムバリデーションを呼び出し
         if (usersRegisterService.isValid(userForm, result)) {
             // E-Mail重複エラーがある場合、入力フォーム (form.html) に戻る
             // ★このとき、BindingResultに設定されたエラーメッセージが表示されます
             return "form"; 
         }
-
         // DBにデータを保存
         usersRegisterService.register(userForm);
-
-        // 登録完了後のリダイレクト
-        return "redirect:/complete"; 
-    }
-    
-    // 【新規追加】完了画面表示メソッド
-    @GetMapping("/complete")
-    public String complete() {
-        return "complete";
+        return "confirm";
     }
 }

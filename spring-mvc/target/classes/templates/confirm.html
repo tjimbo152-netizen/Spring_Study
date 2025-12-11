@@ -5,38 +5,24 @@
     <title>Title</title>
     <link href="/css/confirm.css" rel="stylesheet"></link>
 </head>
-<body>
-    <table>
-        <tr>
-            <th class="cell_title">氏名</th>
-            <td>[[${userForm.name}]]</td>
-        </tr>
-        <tr>
-            <th class="cell_title">E-Mail</th>
-            <td>[[${userForm.email}]]</td>
-        </tr>
-        <tr>
-            <th class="cell_title">年齢</th>
-            <td>[[${userForm.age}]]</td>
-        </tr>
-        <tr>
-            <th class="cell_title">備考</th>
-            <td>[[${userForm.note}]]</td>
-        </tr>
-    </table>
-    
-    <form id="registerForm" method="post" th:action="@{/register}" th:object="${userForm}">
-        <input type="hidden" th:field="*{name}">
-        <input type="hidden" th:field="*{email}">
-        <input type="hidden" th:field="*{age}">
-        <input type="hidden" th:field="*{note}">
-    </form>
-    
-    <script th:inline="javascript">
-        window.onload = function() {
-            // ページが完全にロードされたら、自動で/registerへPOST送信する
-            document.getElementById('registerForm').submit();
-        };
-    </script>
-    </body>
+	<body>
+    	<table>
+        	<tr>
+            	<th class="cell_title">氏名</th>
+            	<td>[[${userForm.name}]]</td>
+        	</tr>
+        	<tr>
+            	<th class="cell_title">E-Mail</th>
+            	<td>[[${userForm.email}]]</td>
+        	</tr>
+        	<tr>
+           		 <th class="cell_title">年齢</th>
+            	 <td>[[${userForm.age}]]</td>
+        	 </tr>
+        	<tr>
+            	<th class="cell_title">備考</th>
+            	<td>[[${userForm.note}]]</td>
+        	</tr>
+    	 </table>
+	</body>
 </html>
