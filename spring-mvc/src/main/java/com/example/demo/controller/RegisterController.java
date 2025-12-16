@@ -36,6 +36,7 @@ public class RegisterController {
             // ★このとき、BindingResultに設定されたエラーメッセージが表示されます
             return "form"; 
         }
+
         // DBにデータを保存
         usersRegisterService.register(userForm);
         return "confirm";
