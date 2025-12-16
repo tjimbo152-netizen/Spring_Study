@@ -1,0 +1,77 @@
+/* ニュース新規作成 */
+.form-ul {
+  margin: 50px auto;
+  padding-left: 0;
+}
+
+.form-body {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  font-size: 1.4rem;
+  margin-bottom: 50px;
+}
+/* create.css の修正後 */
+.form-gender {
+  display: flex;
+  gap: 100px;
+  align-items: center; /* 要素を垂直方向に中央揃えにする */
+  text-align: left;
+  font-size: 1.4rem;
+  margin-bottom: 50px;
+}
+/* 新しく追加: 性別ラベルの間にスペースを作る */
+.form-gender-options {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0; /* ラジオボタン同士の隙間をなくす */
+  align-items: center;
+}
+/* ラジオボタンのタイトルと入力部分のスペースを調整 */
+.form-gender label:first-child {
+    width: 100px; /* "性別"というラベルの幅に合わせる */
+}
+
+.form-ul > li:not(:first-child) {
+  margin-top: 20px;
+}
+
+.title {
+  margin: 0;
+}
+
+.error_msg {
+  color: tomato;
+}
+
+.input-area {
+  width: 500px;
+  height: 50px;
+  padding: 5px 10px;
+  font-size: 1.4rem;
+  border-radius: 10px;
+}
+
+input.input-area_file {
+  padding: 0;
+  font-size: 1rem;
+  border-radius: 0;
+}
+
+.btn-area {
+  margin: 25px 15px 30px 0;
+}
+.btn {
+  background-color: #398ed3;
+  width: 100px;
+  height: 40px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.textarea {
+  resize: none;
+  width: 500px;
+  height: 300px;
+}

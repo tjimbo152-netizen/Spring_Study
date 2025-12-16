@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <title>プロフィール新規作成</title>
+    <link rel="stylesheet" th:href="@{/css/profile/create.css}">
+</head>
+<body>
+<main layout:fragment="contents">
+            <div class="wrapper">
+            <h1>プロフィール新規作成</h1>
+            <form th:action="@{/profile/create}" th:object="${profileCreateForm}" method="post">
+                <ul class="form-ul">
+                    <li>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="error_msg"></p>
+                        <div class="form-body">
+                            <label for="name">名前</label>
+                            <input type="text" id="name" th:field="*{name}" class="input-area">
+                        </div>
+                    </li>
+                    <li>
+                    	<p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" th:errorclass="error_msg"></p>
+                        <div class="form-gender">
+                            <label>性別</label>
+        
+                            <div class="form-gender-options">
+                                <p class="error" th:errors="*{gender}"></p>
+                                    <label><input type="radio" th:field="*{gender}" value="male"> 男性</label>
+                                    <label><input type="radio" th:field="*{gender}" value="female"> 女性</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <p th:if="${#fields.hasErrors('hobby')}" th:errors="*{hobby}" th:errorclass="error_msg"></p>
+                        <div class="form-body">
+                        	<label for="hobby">趣味</label>
+                        	<p class="error" th:errors="*{hobby}"></p>
+                        	<textarea th:field="*{hobby}" rows="15" class="input-area textarea"></textarea>
+                        </div>
+                    </li>
+                    <li>
+                        <p th:if="${#fields.hasErrors('introduction')}" th:errors="*{introduction}" th:errorclass="error_msg"></p>
+                        <div class="form-body">
+                        	<label for="introduction">自己紹介</label>
+                        	<p class="error" th:errors="*{introduction}"></p>
+                        	<textarea th:field="*{introduction}" rows="15" class="input-area textarea"></textarea>
+                        </div>
+                    </li>
+                    <li class="btn-area">
+                        <button class="btn">送信</button>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

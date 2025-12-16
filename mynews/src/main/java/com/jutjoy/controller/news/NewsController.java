@@ -10,17 +10,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.jutjoy.domain.form.news.NewsCreateForm;
-import com.jutjoy.domain.service.news.NewsCreateService;
+import com.jutjoy.service.news.NewsCreateService;
 
 @Controller
 public class NewsController {
 
-    @GetMapping("/news/create")
+	@Autowired
+    private NewsCreateService newsCreateService;
+
+	
+	@GetMapping("/news/create")
     public String create(@ModelAttribute("form") NewsCreateForm newsCreateForm) {
         return "news/create";
     }
-    @Autowired
-    private NewsCreateService newsCreateService;
+    
     @PostMapping("/news/create")
     public String create(@Validated @ModelAttribute("form") NewsCreateForm newsCreateForm,
             BindingResult result, Model model) {
@@ -37,4 +40,9 @@ public class NewsController {
     public String complete() {
         return "news/complete";
     }
+    @GetMapping("/news/list")
+    public String list() {
+        return "redirect:/profile/create"; 
+    }
+
 }
