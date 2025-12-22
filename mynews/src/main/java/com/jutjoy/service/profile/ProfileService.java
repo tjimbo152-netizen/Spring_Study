@@ -1,5 +1,7 @@
 package com.jutjoy.service.profile; // profile を追加
 
+import java.util.List; // ★ 追加
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +25,10 @@ public class ProfileService {
 
         // DBに保存
         profileRepository.save(profile);
+    }
+    
+    // 一覧取得メソッド 
+    public List<Profile> findAll() {
+        return profileRepository.findAllByOrderById();
     }
 }

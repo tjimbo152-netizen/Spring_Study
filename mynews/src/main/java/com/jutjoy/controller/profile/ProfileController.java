@@ -1,5 +1,7 @@
 package com.jutjoy.controller.profile; // ★ パッケージに profile を追加
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.jutjoy.domain.entity.profile.Profile;
 import com.jutjoy.domain.form.profile.ProfileCreateForm;
 import com.jutjoy.service.profile.ProfileService;
 
@@ -42,5 +45,17 @@ public class ProfileController {
         // ニュース機能の完了画面を流用
         redirectAttributes.addFlashAttribute("message", "プロフィールが正常に登録されました。");
         return "redirect:/news/create/complete"; 
+    }
+    
+    // 一覧画面表示
+    @GetMapping("/list")
+    public String list(Model model) {
+        // サービスから全件取得
+        List<Profile> profileList = profileService.findAll();
+        
+        // 画面に渡す [cite: 49]
+        model.addAttribute("profileList", profileList);
+        
+        return "profile/list";
     }
 }
