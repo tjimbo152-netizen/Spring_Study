@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jutjoy.domain.entity.profile.Profile;
 import com.jutjoy.domain.form.profile.ProfileCreateForm;
+import com.jutjoy.service.profile.ProfileListService;
 import com.jutjoy.service.profile.ProfileService;
 
 @Controller
@@ -23,6 +25,8 @@ public class ProfileController {
 	
 	@Autowired
     private ProfileService profileService;
+	@Autowired
+	private ProfileListService profileListService;
 
     // URL: http://localhost:8080/profile/create
     @GetMapping("/create") 
@@ -44,16 +48,18 @@ public class ProfileController {
 
         // ニュース機能の完了画面を流用
         redirectAttributes.addFlashAttribute("message", "プロフィールが正常に登録されました。");
-        return "redirect:/news/create/complete"; 
+        return "redirect:/profile/list";
     }
     
     // 一覧画面表示
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(@RequestParam(name = "name", required = false) String name, Model model) {
         // サービスから全件取得
-        List<Profile> profileList = profileService.findAll();
+    	List<Profile> profileList = profileListService.list(name);
+        model.addAttribute("name", name);
+        model.addAttribute("profilesList", profileList);
         
-        // 画面に渡す [cite: 49]
+        // 画面に渡す
         model.addAttribute("profileList", profileList);
         
         return "profile/list";

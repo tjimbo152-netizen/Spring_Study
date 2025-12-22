@@ -9,7 +9,7 @@ import com.jutjoy.domain.entity.profile.Profile;
 
 @Repository
 public interface ProfileRepository extends JpaRepository<Profile, Integer> {
-	
+	public List<Profile> findByNameLike(String name);
 	// 全件をIDの昇順で取得するメソッドを追加 
     public List<Profile> findAllByOrderById();
 }

@@ -19,6 +19,12 @@
         
         <div style="margin-bottom: 20px;">
             <button class="btn" th:onclick="location.href='/profile/create'">新規登録</button>
+            <form th:action="@{/profile/list}" method="get" class="search">
+                    タイトル
+            	<input type="text" name="name" th:value="${name}" class="input-search">
+                <button class="search-btn">検索</button>
+            </form>
+            
         </div>
 
         <table>

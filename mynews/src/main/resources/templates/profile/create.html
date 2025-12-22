@@ -14,7 +14,7 @@
             <form th:action="@{/profile/create}" th:object="${profileCreateForm}" method="post">
                 <ul class="form-ul">
                     <li>
-                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="error_msg"></p>
+                        <p th:if="${#fields.hasErrors('name')}" th:errorclass="error_msg"></p>
                         <div class="form-body">
                             <label for="name">名前</label>
                             <input type="text" id="name" th:field="*{name}" class="input-area">
@@ -53,6 +53,7 @@
                     </li>
                 </ul>
             </form>
+            <div class="return_btn-area"><a class="return_btn" th:href="@{/news/list}">一覧画面に戻る</a></div>
         </div>
     </main>
 </body>
