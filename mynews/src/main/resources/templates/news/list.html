@@ -25,15 +25,24 @@
                     <th>本文</th>
                     <th>操作</th>
                 </tr>
-                <tr th:each="news, status : ${newsList}">
-                    <td>[[${status.count}]]</td>
+                               <tr th:each="news, status : ${newsList}">
+                    <td th:text="${status.count}"></td>
                     <td>
-                        <p class="td-title">[[${news.title}]]</p>
+                        <p class="td-title" th:text="${#strings.length(news.title) <= 7} ? ${news.title} : |${#strings.substring(news.title, 0, 7)}...|"></p>
                     </td>
                     <td>
-                        <p class="td-contents">[[${news.content}]]</p>
+                        <p class="td-contents" th:text="${#strings.length(news.content) <= 40} ? ${news.content} : |${#strings.substring(news.content, 0, 40)}...|"></p>
                     </td>
                     <td class="operation-box">
+<!-- ここから -->
+                        <a th:href="@{/news/edit/__${news.id}__}" class="operation">編集</a>
+                        
+                        <form method="post" name="delete" th:action="@{/news/delete}">
+                            <input type="hidden" name="id" th:value="${news.id}">
+                            <a onclick="this.parentNode.submit()" class="operation">削除</a>
+                        </form>
+                        
+<!-- ここまで -->
                     </td>
                 </tr>
             </table>
