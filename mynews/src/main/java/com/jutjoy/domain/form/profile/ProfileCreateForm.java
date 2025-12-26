@@ -6,6 +6,9 @@ import lombok.Data;
 
 @Data
 public class ProfileCreateForm {
+	
+	// 更新対象を特定
+    private Integer id;
 
     @NotEmpty(message = "*名前は必ず入力してください。")
     @Size(max = 50, message = "*名前は50文字以内で設定してください。")

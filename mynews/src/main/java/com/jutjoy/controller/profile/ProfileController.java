@@ -1,4 +1,4 @@
-package com.jutjoy.controller.profile; // ★ パッケージに profile を追加
+package com.jutjoy.controller.profile;
 
 import java.util.List;
 
@@ -9,59 +9,80 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.jutjoy.domain.entity.profile.Profile;
 import com.jutjoy.domain.form.profile.ProfileCreateForm;
-import com.jutjoy.service.profile.ProfileListService;
+import com.jutjoy.domain.form.profile.ProfileEditForm;
 import com.jutjoy.service.profile.ProfileService;
 
 @Controller
-@RequestMapping("/profile") 
+@RequestMapping("/profile")
 public class ProfileController {
-	
-	@Autowired
-    private ProfileService profileService;
-	@Autowired
-	private ProfileListService profileListService;
 
-    // URL: http://localhost:8080/profile/create
+    @Autowired
+    private ProfileService profileService;
+
+    // --- 一覧表示 ---
+    @GetMapping("/list")
+    public String list(Model model) {
+        List<Profile> profileList = profileService.findAll();
+        model.addAttribute("profileList", profileList);
+        return "profile/list";
+    }
+
+    // --- 新規登録画面 ---
     @GetMapping("/create") 
-    public String create(@ModelAttribute("profileCreateForm") ProfileCreateForm form, Model model) {
-        // Modelに属性を追加することで、create.htmlのth:object="${profileCreateForm}"と紐づく
+    public String create(@ModelAttribute("profileCreateForm") ProfileCreateForm form) {
         return "profile/create"; 
     }
 
+    // --- 新規保存処理 ---
     @PostMapping("/create")
     public String save(@Validated @ModelAttribute("profileCreateForm") ProfileCreateForm form,
-                       BindingResult bindingResult,
-                       RedirectAttributes redirectAttributes) {
-
+                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "profile/create";
         }
-
         profileService.save(form);
+        // 完了画面ではなく一覧へ戻る設定
+        return "redirect:/profile/list"; 
+    }
 
-        // ニュース機能の完了画面を流用
-        redirectAttributes.addFlashAttribute("message", "プロフィールが正常に登録されました。");
+    // --- 編集画面の表示 ---
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        Profile profile = profileService.findById(id);
+        
+        ProfileEditForm form = new ProfileEditForm();
+        form.setId(profile.getId());
+        form.setName(profile.getName());
+        form.setGender(profile.getGender());
+        form.setHobby(profile.getHobby());
+        form.setIntroduction(profile.getIntroduction());
+        
+        model.addAttribute("profileEditForm", form);
+        return "profile/edit";
+    }
+
+    // --- 更新処理 ---
+    @PostMapping("/edit")
+    public String update(@Validated @ModelAttribute("profileEditForm") ProfileEditForm form,
+                         BindingResult result) {
+        if (result.hasErrors()) {
+            return "profile/edit";
+        }
+        profileService.update(form);
         return "redirect:/profile/list";
     }
-    
-    // 一覧画面表示
-    @GetMapping("/list")
-    public String list(@RequestParam(name = "name", required = false) String name, Model model) {
-        // サービスから全件取得
-    	List<Profile> profileList = profileListService.list(name);
-        model.addAttribute("name", name);
-        model.addAttribute("profilesList", profileList);
-        
-        // 画面に渡す
-        model.addAttribute("profileList", profileList);
-        
-        return "profile/list";
+
+    // --- 削除処理 ---
+    @PostMapping("/delete")
+    public String delete(@RequestParam Integer id) {
+        profileService.delete(id);
+        return "redirect:/profile/list";
     }
 }
