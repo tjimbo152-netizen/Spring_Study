@@ -1,4 +1,4 @@
-package com.jutjoy.domain.service.news;
+package com.jutjoy.service.news;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jutjoy.domain.entity.news.News;
-import com.jutjoy.domain.form.NewsEditForm;
+import com.jutjoy.domain.form.news.NewsEditForm;
 import com.jutjoy.domain.repository.news.NewsRepository;
 
 import lombok.AllArgsConstructor;

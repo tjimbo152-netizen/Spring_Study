@@ -1,4 +1,4 @@
-package com.jutjoy.domain.service.news;
+package com.jutjoy.service.news;
 
 import java.io.File;
 

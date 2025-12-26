@@ -4,4 +4,5 @@
     <fullyQualifiedTypeName name="jakarta.persistence.Id"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="com.jutjoy.domain.entity.profile.Profile"/>
+    <fullyQualifiedTypeName name="org.springframework.transaction.annotation.Transactional"/>
 </qualifiedTypeNameHistroy>

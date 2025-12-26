@@ -1,4 +1,4 @@
-package com.jutjoy.domain.form;
+package com.jutjoy.domain.form.news;
 
 import org.springframework.web.multipart.MultipartFile;
 

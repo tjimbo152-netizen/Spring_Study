@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jutjoy.domain.entity.news.News;
-import com.jutjoy.domain.form.NewsEditForm;
 import com.jutjoy.domain.form.news.NewsCreateForm;
-import com.jutjoy.domain.service.news.NewsDeleteService;
-import com.jutjoy.domain.service.news.NewsEditService;
+import com.jutjoy.domain.form.news.NewsEditForm;
 import com.jutjoy.service.news.NewsCreateService;
+import com.jutjoy.service.news.NewsDeleteService;
+import com.jutjoy.service.news.NewsEditService;
 import com.jutjoy.service.news.NewsListService;
 
 @Controller
