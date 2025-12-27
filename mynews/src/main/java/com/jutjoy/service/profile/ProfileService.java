@@ -5,20 +5,27 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jutjoy.domain.entity.profile.Profile;
+import com.jutjoy.domain.entity.profile.ProfileHistories;
 import com.jutjoy.domain.form.profile.ProfileCreateForm;
 import com.jutjoy.domain.form.profile.ProfileEditForm;
+import com.jutjoy.domain.repository.profile.ProfileHistoriesRepository;
 import com.jutjoy.domain.repository.profile.ProfileRepository;
 
 @Service
 public class ProfileService {
+
     @Autowired
     private ProfileRepository profileRepository;
 
- // 一覧取得
+    @Autowired
+    private ProfileHistoriesRepository profileHistoriesRepository;
+
+    // 一覧取得
     public List<Profile> findAll() {
-        return profileRepository.findAll();
+        return profileRepository.findAllByOrderById();
     }
 
     // 新規保存
@@ -37,19 +44,33 @@ public class ProfileService {
     }
 
     // 更新処理
+    @Transactional
     public void update(ProfileEditForm form) {
-    	// 1. まず、データベースから既存のデータを取得する
+        // 1. データベースから既存のデータを取得（registered_dateを保持するため）
         Profile profile = profileRepository.findById(form.getId()).orElse(null);
         
         if (profile != null) {
             // 2. 既存のデータに対して、フォームから送られてきた値だけを上書きする
-            // これにより、registered_date などの既存の値は保持されます
             profile.setName(form.getName());
             profile.setGender(form.getGender());
             profile.setHobby(form.getHobby());
             profile.setIntroduction(form.getIntroduction());
+            
+            // プロフィール本体を保存
             profileRepository.save(profile);
+
+            // ★追加：編集履歴の登録
+            // NewsHistoriesを参考に、リレーション用の履歴を保存します
+            registerHistory(profile.getId());
         }
+    }
+
+    // 編集履歴登録用メソッド（WikiのregisterHistoryを参考に実装）
+    private void registerHistory(Integer profileId) {
+        ProfileHistories history = new ProfileHistories();
+        history.setProfileId(profileId);
+        // edited_date は Entity の @LastModifiedDate で自動設定されるため、IDのセットのみでOK
+        profileHistoriesRepository.save(history);
     }
 
     // 削除処理

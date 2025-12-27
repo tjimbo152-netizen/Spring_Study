@@ -52,25 +52,34 @@ public class ProfileController {
 
     // --- 編集画面の表示 ---
     @GetMapping("/edit")
-	public String edit(@RequestParam(name = "id") Integer id, Model model) {
-	    Profile profile = profileService.findById(id);
-	    
-	    ProfileEditForm form = new ProfileEditForm();
-	    form.setId(profile.getId());
-	    form.setName(profile.getName());
-	    form.setGender(profile.getGender());
-	    form.setHobby(profile.getHobby());
-	    form.setIntroduction(profile.getIntroduction());
-	    
-	    model.addAttribute("profileEditForm", form);
-	    return "profile/edit";
-	}
+    public String edit(@RequestParam(name = "id") Integer id, Model model) {
+        Profile profile = profileService.findById(id);
+        
+        // EntityからFormへ値を詰め替える（これは既存のコード）
+        ProfileEditForm form = new ProfileEditForm();
+        form.setId(profile.getId());
+        form.setName(profile.getName());
+        form.setGender(profile.getGender());
+        form.setHobby(profile.getHobby());
+        form.setIntroduction(profile.getIntroduction());
+        
+        model.addAttribute("profileEditForm", form);
+
+        // ★これを追加：HTML側の ${profile.histories} を動かすために必要です
+        model.addAttribute("profile", profile); 
+        
+        return "profile/edit";
+    }
 
     // --- 更新処理 ---
     @PostMapping("/edit")
     public String update(@Validated @ModelAttribute("profileEditForm") ProfileEditForm form,
-                         BindingResult result) {
+                         BindingResult result, Model model) { 
         if (result.hasErrors()) {
+            // ★ 入力エラーで画面に戻る際、履歴を表示するために profile データを取得して渡す
+            Profile profile = profileService.findById(form.getId());
+            model.addAttribute("profile", profile);
+            
             return "profile/edit";
         }
         profileService.update(form);

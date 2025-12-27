@@ -1,0 +1,138 @@
+.form-ul {
+  margin: 50px auto;
+  padding-left: 0;
+}
+
+.form-body {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    width: 500px; 
+    box-sizing: border-box; /* パディングを含めた計算にする */
+    justify-content: flex-start;
+}
+
+.radio-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;        /* ボタンと文字をくっつける */
+    cursor: pointer;
+}
+
+/* ラジオボタン自体の外側の余白を消して微調整しやすくする */
+.radio-item input[type="radio"] {
+    margin: 0;
+}
+
+.form-body-img{
+  align-items: baseline;
+}
+
+.form-body-inner {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+.form-ul > li:not(:first-child) {
+  margin-top: 20px;
+}
+
+.title {
+  margin: 0;
+}
+
+.error_msg {
+  color: tomato;
+}
+
+.input-area {
+  width: 500px;
+  height: 50px;
+  padding: 5px 10px;
+  font-size: 1.4rem;
+  border-radius: 10px;
+}
+
+input.input-area_file {
+  padding: 0;
+  font-size: 1rem;
+  border-radius: 0;
+}
+
+.textarea {
+  height: 300px;
+}
+
+.flex{
+  display: flex;
+  gap: 10px;
+}
+
+.checkbox{
+  margin: 0;
+}
+
+.form-img-box {
+  color: #398ed3;
+  margin-bottom: 10px;
+}
+
+.form-img-text {
+  font-size: 0.8rem;
+  align-self: center;
+}
+
+.date {
+  width: 200px;
+  border: 1px solid;
+  margin: 0 auto;
+  padding: 5px 0;
+}
+
+.btn-area {
+  margin: 25px 15px 30px 0;
+}
+
+.btn,
+.return_btn {
+  height: 40px;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.btn {
+  background-color: #398ed3;
+  width: 100px;
+}
+
+.return_btn-area {
+  text-align: center;
+}
+
+.return_btn {
+  background-color: gray;
+  width: 200px;
+  line-height: 40px;
+}
+
+.u-margin_0 {
+  margin: 0;
+}
+
+.history {
+    text-align: center; /* 履歴を中央寄せにする [cite: 148] */
+    padding-left: 0;   /* リストの余白を消す */
+    list-style: none;  /* ドットを消す */
+}
+
+.history_text {
+    font-size: 1.4rem; /* テキストサイズを指定 [cite: 151] */
+    text-align: center; /* ラベルも中央に寄せる */
+    margin-top: 40px;   /* フォームとの間隔を空ける */
+}

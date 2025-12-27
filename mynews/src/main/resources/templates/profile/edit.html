@@ -22,13 +22,21 @@
                         </div>
                     </li>
                     <li>
-                        <p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" th:errorclass="error_msg"></p>
-                        <div class="form-body">
-                            <label class="title">性別</label>
-                            <input type="radio" th:field="*{gender}" value="男性">男性
-                            <input type="radio" th:field="*{gender}" value="女性">女性
-                        </div>
-                    </li>
+					    <p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" th:errorclass="error_msg"></p>
+					    <div class="form-body">
+					        <label class="title">性別</label>
+					        <div class="radio-group">
+					            <label class="radio-item">
+					                <input type="radio" th:field="*{gender}" value="男性">
+					                <span>男性</span>
+					            </label>
+					            <label class="radio-item">
+					                <input type="radio" th:field="*{gender}" value="女性">
+					                <span>女性</span>
+					            </label>
+					        </div>
+					    </div>
+					</li>
                     <li>
                         <p th:if="${#fields.hasErrors('hobby')}" th:errors="*{hobby}" th:errorclass="error_msg"></p>
                         <div class="form-body">
@@ -48,6 +56,15 @@
                     </li>
                 </ul>
             </form>
+            <div class="history-container">
+                <p class="history_text">編集履歴</p>
+                <ul class="history">
+                    <li th:each="history : ${profile.histories}" class="date" 
+                        th:text="${#dates.format(history.editedDate, 'yyyy/MM/dd HH:mm:ss')}">
+                    </li>
+                    <li th:if="${#lists.isEmpty(profile.histories)}">履歴はありません</li>
+                </ul>
+            </div>
             <div class="return_btn-area">
                 <a class="return_btn" th:href="@{/profile/list}">一覧画面に戻る</a>
             </div>
